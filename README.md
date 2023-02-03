@@ -4,6 +4,7 @@
 - pull down the repo
 - create a pyton virtual env using python 3.10
     - ```virtualenv -p python3 venv```
+    - ```. venv/bin/activate```
 - pip install requirements
     - ```pip install -r requirements.txt```
 -  you will also need a ```profiles.yml``` file in your ```~/.dbt``` directory that looks like this (ask Melissa for the values):
