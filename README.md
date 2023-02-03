@@ -6,7 +6,22 @@
     - ```virtualenv -p python3 venv```
 - pip install requirements
     - ```pip install -r requirements.txt```
-
+-  you will also need a ```profiles.yml``` file in your ```~/.dbt``` directory that looks like this (ask Melissa for the values):
+```
+dbtlearn:
+  outputs:
+    dev:
+      account: [Snowflake Account String]
+      database: airbnb
+      password: [password]
+      role: transform
+      schema: dev
+      threads: 4
+      type: snowflake
+      user: dbt
+      warehouse: COMPUTE_WH
+  target: dev
+  ```
 
 ### Using the project
 
@@ -23,5 +38,3 @@
 - Check out [Discourse](https://discourse.getdbt.com/) for commonly asked questions and answers
 - Join the [chat](https://community.getdbt.com/) on Slack for live discussions and support
 - Check out [the blog](https://blog.getdbt.com/) for the latest news on dbt's development and best practices
-
-small change to make sure the default user updates
