@@ -2,7 +2,7 @@
 
 ### Setup
 - pull down the repo
-- create a pyton virtual env using python 3.10
+- create a pyton virtual env using python 3.10 (optional)
     - ```virtualenv -p python3 venv```
     - ```. venv/bin/activate```
 - pip install requirements
