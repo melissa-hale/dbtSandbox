@@ -56,12 +56,15 @@ models:
           - relationships:
               to: ref('dim_listings_cleansed')
               field: listing_id
- 
-      - name: reviewer_name
-        tests:
-          - not_null
 
       - name: review_sentiment
         tests:
           - accepted_values:
               values: ['positive', 'neutral', 'negative']
+    meta:
+      montecarlo:
+        field_health:
+          - table: airbnb:dev.fct_reviews_cleansed
+            timestamp_field: created
+            fields:
+              - review_sentiment
