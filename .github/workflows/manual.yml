@@ -1,0 +1,51 @@
+# This is a basic workflow that is manually triggered
+name: run models and apply monitors
+
+# Controls when the action will run. Workflow runs when manually triggered using the UI
+# or API.
+on:
+  workflow_dispatch:
+#     # Inputs the workflow accepts.
+    inputs:
+      tags:
+        description: 'Workflow tags'
+
+# Defining envars required for the workflow
+env:
+  # dbt required secrets
+  DBT_PROFILES_DIR: ./
+  SNOWFLAKE_ACCOUNT: ${{ secrets.SNOWFLAKE_ACCOUNT }}
+  DBT_USER: ${{ secrets.DBT_USER }}
+  DBT_PASSWORD: ${{ secrets.DBT_PASSWORD }}
+  
+  # Monte Carlo API secrets
+  MCD_DEFAULT_API_ID: ${{ secrets.MCD_DEFAULT_API_ID }}
+  MCD_DEFAULT_API_TOKEN: ${{ secrets.MCD_DEFAULT_API_TOKEN }}
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "apply_monitors"
+  apply_monitors:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+    - name: Check out repo
+      uses: actions/checkout@main
+      
+    - uses: actions/setup-python@v1
+      with:
+        python-version: '3.7.x'
+        
+    - name: Install dependencies
+      run: |
+        pip install dbt-snowflake
+        pip install montecarlodata
+        dbt deps
+        
+    - name: Build dbt models
+      run: dbt build
+      
+    - name: Apply monitor configuration in Monte Carlo
+      run: montecarlo monitors apply --namespace dev
