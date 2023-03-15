@@ -1,0 +1,13 @@
+dbtlearn:
+  outputs:
+    dev:
+      account: "{{ env_var('SNOWFLAKE_ACCOUNT') }}"
+      database: rentaldata
+      password: "{{ env_var('DBT_PASSWORD') }}"
+      role: transform
+      schema: dev
+      threads: 4
+      type: snowflake
+      user: "{{ env_var('DBT_USER') }}"
+      warehouse: COMPUTE_WH
+  target: dev
